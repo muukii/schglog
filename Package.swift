@@ -10,11 +10,14 @@ let package = Package(
     .iOS(.v13),
   ],
   products: [
-    .executable(name: "schglog", targets: ["schglog"]),
+    .executable(
+      name: "schglog",
+      targets: ["schglog"]
+    ),
     .library(
       name: "ChangeLogKit",
       targets: ["ChangeLogKit"]
-    )
+    ),
   ],
   dependencies: [
     // Dependencies declare other packages that this package depends on.
@@ -23,15 +26,23 @@ let package = Package(
       url: "https://github.com/apple/swift-argument-parser.git",
       .upToNextMajor(from: "1.0.0")
     ),
+    .package(url: "https://github.com/onevcat/Rainbow.git", from: "4.0.1"),
+    //    .package(url: "https://github.com/dominicegginton/Spinner", from: "1.1.4"),
   ],
   targets: [
     .target(
       name: "schglog",
-      dependencies: ["ChangeLogKit"]
+      dependencies: [
+        "ChangeLogKit",
+        .product(name: "ArgumentParser", package: "swift-argument-parser"),
+      ]
     ),
     .target(
       name: "ChangeLogKit",
-      dependencies: ["Get", .product(name: "ArgumentParser", package: "swift-argument-parser")]
+      dependencies: [
+        "Get",
+        "Rainbow",
+      ]
     ),
     .testTarget(
       name: "chglog.swiftTests",
